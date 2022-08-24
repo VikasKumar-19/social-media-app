@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(helmet());
-app.use(morgan("common"));
+// app.use(morgan("common"));
 
 app.use('/api/auth', authRouter)
 app.use('/api/users', userRouter)

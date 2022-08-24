@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
-  username:{
+  username: {
     type: String,
     required: true,
     min: 3,
@@ -27,20 +28,42 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
-  followers:{
+  followers: {
     type: Array,
     default: []
   },
-  followings:{
+  followings: {
     type: Array,
     default: []
   },
-  isAdmin:{
+  isAdmin: {
     type: Boolean,
     default: false,
+  },
+  desc: {
+    type: String,
+    max: 50
+  },
+  city: {
+    type: String,
+    max: 50,
+  },
+  from: {
+    type: String,
+    max: 50,
+  },
+  relationship: {
+    type: Number,
+    enum: [1, 2, 3]
   }
-},{
+}, {
   timestamps: true
 })
 
+userSchema.pre('save', async function () {
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+})
+
 module.exports = mongoose.model("User", userSchema);
+
