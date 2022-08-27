@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const userRouter = require('./routes/users');
+const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
+const postsRouter = require('./routes/posts');
 const connectDB = require('./db/connectDB');
 dotenv.config();
 
@@ -14,7 +15,8 @@ app.use(helmet());
 // app.use(morgan("common"));
 
 app.use('/api/auth', authRouter)
-app.use('/api/users', userRouter)
+app.use('/api/users', usersRouter)
+app.use('/api/posts', postsRouter)
 
 app.get('/', (req, res)=>{
   res.send("helo")

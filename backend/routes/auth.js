@@ -29,7 +29,7 @@ router.post("/login", async (req, res)=>{
     return res.status(200).json({user})
   }
   catch(err){
-
+    res.status(501).json({msg: err.message})
   }
 })
 
